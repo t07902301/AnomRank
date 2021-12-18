@@ -4,7 +4,7 @@
 #include <random>
 #include <vector>
 #include "time.h"
-
+#include <algorithm>
 #include "accuracy.cpp"
 #include "anomaly_detect.cpp"
 #include "anomaly_inject.cpp"
@@ -125,18 +125,60 @@ int main(int argc, char *argv[])
         }
         attackNum = 0;
     }
-
-    // WRITE ANOMALY SCORE
-    string filePath = "darpa_anomrank.txt";
     ofstream writeFile;
-    writeFile.open(filePath.c_str(), ofstream::out);
+    writeFile.open("darpa_anomrank.txt");
     for(int i = 0; i < testNum; i++)
-        writeFile << anomScore[i] << " " << int(attack[i]) << endl;
-    writeFile.close();
+        writeFile << anomScore[i] << endl;
+    writeFile.close();    
+    // // WRITE ANOMALY SCORE
+    // string filePath = "darpa_anomrank.txt";
+    // ofstream writeFile;
+    // writeFile.open(filePath.c_str(), ofstream::out);
+    // for(int i = 0; i < testNum; i++)
+    //     writeFile << anomScore[i] << " " << int(attack[i]) << endl;
+    // writeFile.close();
 
-    // COMPUTE ACCURACY
-    for(int i = 1; i < 17; i ++)
-        compute_accuracy(anomScore, attack, testNum, 50*i);
+    // bool pred_array[testNum]={};
+	// for (int i = 0; i < topN; i++){
+    //     pred_array[i]=true;
+    // }    
+	// for (int i = 0; i < testNum; i++){
+    //     pred_array[i]=false;
+    // }        
+    // ofstream pred;
+    // pred.open ("pred.txt");
+	// for (int i = 0; i < testNum; i++){
+    //     pred<<pred_array[i];
+    // }
+    // pred.close();
+
+    // // COMPUTE ACCURACY
+    // for(int i = 1; i < 17; i ++)
+    //     compute_accuracy(anomScore, attack, testNum, 50*i);
+
+    //AUC
+    // std::vector<size_t> idx(testNum);
+    // std::iota(idx.begin(), idx.end(), 0);
+
+    // std::sort(idx.begin(), idx.end(), [&anomScore](size_t i1, size_t i2) {return anomScore[i1] > anomScore[i2];});
+
+    ofstream gt;
+    gt.open ("gt.txt");
+	for (int i = 0; i < testNum; i++){
+        // if (idx[i]==1194){
+        //     std::cout<<attack[idx[i]]<<" "<<i<<std::endl;
+        //     break;
+        // }
+        // continue;   
+        gt<<attack[i];
+    }
+    gt.close();
+    char command[1024];
+    int i=sprintf(command, "python3 %s %s %s %d","auc.py", "darpa_anomrank.txt", "gt.txt",0);
+    // std::cout << testNum;
+    printf ("The value returned was: %d.\n",i);
+
+	system(command);
 
     // FREE MEMORY
     delete [] A;

@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
-
+#include <fstream>
+using namespace std;
 void compute_accuracy(double* as, bool* attack, int timeNum, int topN)
 {
     int tp, fp, tn, fn;
@@ -32,6 +33,21 @@ void compute_accuracy(double* as, bool* attack, int timeNum, int topN)
     double TPR = double(tp)/(tp+fn);
     double FPR = double(fp)/(fp+tn);
 
-    std::cout << "[TOP" << topN << "] precision: " << precision << ", recall: " << recall << std::endl;
+    // std::cout<< attack[idx[0]]<< attack[idx[200]]<< std::endl;    
+	// for (int i = 0; i < timeNum; i++){
+    //     if(attack[idx[i]]){
+    //         std::cout<<attack[idx[i]]<<" "<<attack[idx[i+1]]<<" "<<idx[i]<< std::endl;    
+    //         break;
+    //     }
+            
+    // }    
+
+
+
+
+
+    // std::cout<< topN<< timeNum<< std::endl;
+    std::cout << "[TOP" << topN << "] precision: " << precision << ", recall: " << recall <<std::endl;
+    // return tp,fp,tn,fp;
 }
 
