@@ -1,5 +1,6 @@
 # AnomRank
-Input format: timestamp, node1,node2,label
+
+**Input format** : timestamp, node1,node2,label
 
 Auc.py
 
