@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     int injectScene = atoi(argv[5]);
     int injectNum = atoi(argv[6]);
     int injectSize = atoi(argv[7]);
+    string data_file=argv[8];
     bool INJECT = (injectScene != 0);
 
     // READ DATA
@@ -126,7 +127,11 @@ int main(int argc, char *argv[])
         attackNum = 0;
     }
     ofstream writeFile;
-    writeFile.open("darpa_anomrank.txt");
+    // char filePath[1024];
+    string filePath = "darpa_anomrank.txt";
+    // sprintf(filePath,'%s_anomrank.txt',data_file);
+    writeFile.open(filePath);
+    // writeFile.open(filePath.c_str(), ofstream::out);
     for(int i = 0; i < testNum; i++)
         writeFile << anomScore[i] << endl;
     writeFile.close();    
