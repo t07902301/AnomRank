@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     }
     ofstream writeFile;
     // char filePath[1024];
-    string filePath = "darpa_anomrank.txt";
+    string filePath = "anomaly_scores.txt";
     // sprintf(filePath,'%s_anomrank.txt',data_file);
     writeFile.open(filePath);
     // writeFile.open(filePath.c_str(), ofstream::out);
