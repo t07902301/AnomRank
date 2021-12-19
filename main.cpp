@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     int injectScene = atoi(argv[5]);
     int injectNum = atoi(argv[6]);
     int injectSize = atoi(argv[7]);
-    string data_file=argv[8];
+//     string data_file=argv[8];
     bool INJECT = (injectScene != 0);
 
     // READ DATA
