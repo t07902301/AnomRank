@@ -2,10 +2,6 @@
 
 **Input format** : timestamp, node1,node2,label
 
-Auc.py
+**Auc.py**: Compute AUC scores with sklearn and numpy libraries in python **3.xx** version.
 
-Formatted.txt: twitterworldcup
-
-gt.txt: stores groudtruth and will be passed to auc.py to get auc for each model.
-
-format_input.py: merge data and label csv files from anograph, and then switch columns.
+**data_preprocess.py**: Merge data and labels from csv files absed on sources from Anograph and reorder the elements in tuples for the input format of AnomRank.
