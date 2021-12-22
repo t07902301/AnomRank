@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     int injectScene = atoi(argv[5]);
     int injectNum = atoi(argv[6]);
     int injectSize = atoi(argv[7]);
-//     string data_file=argv[8];
+    string dataset=argv[8];
     bool INJECT = (injectScene != 0);
 
     // READ DATA
@@ -126,61 +126,29 @@ int main(int argc, char *argv[])
         }
         attackNum = 0;
     }
+    // WRITE ANOMALY SCORE
     ofstream writeFile;
-    // char filePath[1024];
-    string filePath = "anomaly_scores.txt";
-    // sprintf(filePath,'%s_anomrank.txt',data_file);
-    writeFile.open(filePath);
+    std::string anomScore_path = dataset + "_anomrank.txt";
+    writeFile.open(anomScore_path);
     // writeFile.open(filePath.c_str(), ofstream::out);
     for(int i = 0; i < testNum; i++)
         writeFile << anomScore[i] << endl;
     writeFile.close();    
-    // // WRITE ANOMALY SCORE
-    // string filePath = "darpa_anomrank.txt";
-    // ofstream writeFile;
-    // writeFile.open(filePath.c_str(), ofstream::out);
-    // for(int i = 0; i < testNum; i++)
-    //     writeFile << anomScore[i] << " " << int(attack[i]) << endl;
-    // writeFile.close();
-
-    // bool pred_array[testNum]={};
-	// for (int i = 0; i < topN; i++){
-    //     pred_array[i]=true;
-    // }    
-	// for (int i = 0; i < testNum; i++){
-    //     pred_array[i]=false;
-    // }        
-    // ofstream pred;
-    // pred.open ("pred.txt");
-	// for (int i = 0; i < testNum; i++){
-    //     pred<<pred_array[i];
-    // }
-    // pred.close();
 
     // // COMPUTE ACCURACY
     // for(int i = 1; i < 17; i ++)
     //     compute_accuracy(anomScore, attack, testNum, 50*i);
 
-    //AUC
-    // std::vector<size_t> idx(testNum);
-    // std::iota(idx.begin(), idx.end(), 0);
-
-    // std::sort(idx.begin(), idx.end(), [&anomScore](size_t i1, size_t i2) {return anomScore[i1] > anomScore[i2];});
-
+    // WRITE groud truth
     ofstream gt;
-    gt.open ("gt.txt");
+    std::string gt_path = dataset + "_groudtruth.txt";
+    gt.open(gt_path);
 	for (int i = 0; i < testNum; i++){
-        // if (idx[i]==1194){
-        //     std::cout<<attack[idx[i]]<<" "<<i<<std::endl;
-        //     break;
-        // }
-        // continue;   
         gt<<attack[i];
     }
     gt.close();
     char command[1024];
-    int i=sprintf(command, "python3 %s %s %s %d","auc.py", "darpa_anomrank.txt", "gt.txt",0);
-    // std::cout << testNum;
+    int i=sprintf(command, "python3 %s %s %s %d","auc.py", anomScore_path, gt_path,0);
     printf ("The value returned was: %d.\n",i);
 
 	system(command);
